@@ -3,190 +3,419 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="BuildTrust — Plataforma de gestión de licitaciones e inteligencia artificial aplicada al sector de la construcción.">
+  <meta name="description" content="BuildTrust — Plataforma de gestión de licitaciones e inteligencia artificial aplicada a la construcción de alta gama.">
   <title>BuildTrust — Inteligencia en Licitaciones ConTech</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
   <style>
+    /* ────────────────────────────────────────────────
+       BuildTrust — Sistema de diseño
+       Estética: arquitectónica · grafito profundo · bronce pulido
+       ──────────────────────────────────────────────── */
+    :root {
+      --bg:        #0B0B0C;   /* negro arquitectónico */
+      --surface:   #101012;   /* grafito de superficie */
+      --line:      #1E1E21;   /* hairline estructural */
+      --line-soft: #18181A;
+      --ink:       #E9E7E2;   /* blanco hueso */
+      --ink-dim:   #99968E;   /* gris cálido */
+      --ink-faint: #5C5A55;
+      --accent:    #C2A878;   /* bronce */
+      --accent-dim:#8A7757;
+      --sans: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --mono: 'IBM Plex Mono', 'SF Mono', monospace;
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      background: #0f1117;
-      color: #e2e8f0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      min-height: 100vh;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    ::selection { background: var(--accent); color: #0B0B0C; }
+
+    a { color: var(--accent); text-decoration: none; transition: color .2s ease; }
+    a:hover { color: var(--ink); }
+    a:focus-visible, button:focus-visible {
+      outline: 1px solid var(--accent);
+      outline-offset: 4px;
+      border-radius: 2px;
+    }
+
+    .wrap {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 clamp(24px, 6vw, 48px);
+    }
+
+    /* ── Hero ───────────────────────────────────────── */
+    .hero {
+      position: relative;
+      padding: clamp(96px, 16vh, 160px) 0 clamp(64px, 10vh, 104px);
+      overflow: hidden;
+    }
+    /* retícula de plano — firma visual */
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, var(--line-soft) 1px, transparent 1px);
+      background-size: calc(100% / 8) 100%;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.9), transparent 78%);
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.9), transparent 78%);
+      pointer-events: none;
+    }
+    .hero-inner { position: relative; }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      border: 1px solid var(--line);
+      padding: 7px 16px;
+      border-radius: 2px;
+      margin-bottom: clamp(36px, 6vh, 56px);
+      background: rgba(16,16,18,.6);
+      backdrop-filter: blur(4px);
+    }
+    .status .dot {
+      width: 5px; height: 5px;
+      background: var(--accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .wordmark {
+      font-size: clamp(3.2rem, 9vw, 6rem);
+      font-weight: 300;
+      letter-spacing: -0.035em;
+      line-height: 1.02;
+      color: var(--ink);
+    }
+    .wordmark strong { font-weight: 600; }
+    .wordmark .terminal { color: var(--accent); }
+
+    .tagline {
+      margin-top: 28px;
+      max-width: 520px;
+      font-size: clamp(1.02rem, 2vw, 1.18rem);
+      font-weight: 300;
+      color: var(--ink-dim);
       line-height: 1.6;
     }
-    .container {
-      max-width: 880px;
-      margin: 0 auto;
-      padding: 80px 32px 64px;
+    .tagline em {
+      font-style: normal;
+      color: var(--ink);
     }
-    header {
-      text-align: center;
-      margin-bottom: 64px;
+
+    /* ── Regla de escala (divisor firma) ───────────── */
+    .scale-rule {
+      display: block;
+      width: 100%;
+      height: 22px;
+      margin-top: clamp(48px, 8vh, 72px);
+      color: var(--line);
     }
-    .logo {
-      font-size: 2.6rem;
-      font-weight: 700;
-      letter-spacing: -1px;
-      color: #f8fafc;
-      margin-bottom: 12px;
+    .scale-rule .major { stroke: var(--ink-faint); }
+    .scale-rule .origin { stroke: var(--accent); }
+
+    /* ── Secciones ─────────────────────────────────── */
+    section { padding: clamp(56px, 9vh, 88px) 0; }
+    section + section { border-top: 1px solid var(--line-soft); }
+
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent-dim);
+      margin-bottom: 26px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
     }
-    .logo span {
-      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+    .eyebrow::after {
+      content: "";
+      height: 1px;
+      flex: 0 0 36px;
+      background: var(--line);
     }
-    .tagline {
-      color: #94a3b8;
-      font-size: 1.05rem;
-      max-width: 540px;
-      margin: 0 auto;
+
+    .lede {
+      font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+      font-weight: 300;
+      line-height: 1.55;
+      letter-spacing: -0.01em;
+      max-width: 720px;
+      color: var(--ink);
     }
-    .badge {
-      display: inline-block;
-      background: #1e2130;
-      border: 1px solid #2d3348;
-      border-radius: 999px;
-      padding: 4px 14px;
-      font-size: 0.78rem;
-      color: #60a5fa;
-      margin-top: 20px;
-      letter-spacing: 0.3px;
+    .lede strong { font-weight: 500; }
+
+    .body-copy {
+      margin-top: 22px;
+      max-width: 640px;
+      color: var(--ink-dim);
+      font-weight: 300;
+      font-size: 1rem;
     }
-    section {
-      background: #161927;
-      border: 1px solid #2d3348;
-      border-radius: 12px;
-      padding: 28px 32px;
-      margin-bottom: 24px;
-    }
-    h2 {
-      color: #f1f5f9;
-      font-size: 1.18rem;
-      margin-bottom: 14px;
-      letter-spacing: -0.3px;
-    }
-    p { color: #cbd5e1; font-size: 0.97rem; }
-    p + p { margin-top: 12px; }
-    .team {
+    .body-copy + .body-copy { margin-top: 16px; }
+
+    /* ── Capacidades ───────────────────────────────── */
+    .capabilities {
+      margin-top: clamp(40px, 6vh, 56px);
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-      margin-top: 18px;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--line);
     }
-    .member {
-      background: #0f1117;
-      padding: 14px 18px;
-      border-radius: 8px;
-      border: 1px solid #2d3348;
+    .cap {
+      padding: 26px 28px 30px 0;
+      border-right: 1px solid var(--line-soft);
     }
-    .member-name { color: #f8fafc; font-weight: 600; }
-    .member-role { color: #94a3b8; font-size: 0.85rem; margin-top: 2px; }
+    .cap:nth-child(3n) { border-right: none; }
+    .cap + .cap { padding-left: 28px; }
+    .cap h3 {
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      margin-bottom: 8px;
+      color: var(--ink);
+    }
+    .cap p {
+      font-size: 0.86rem;
+      font-weight: 300;
+      color: var(--ink-dim);
+      line-height: 1.6;
+    }
+
+    /* ── Stack ─────────────────────────────────────── */
     .stack {
+      margin-top: clamp(36px, 5vh, 48px);
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 14px;
+      gap: 0;
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      overflow: hidden;
     }
     .chip {
-      background: #0f1117;
-      border: 1px solid #2d3348;
-      color: #94a3b8;
-      font-size: 0.78rem;
-      padding: 4px 10px;
-      border-radius: 6px;
-    }
-    footer {
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      letter-spacing: 0.04em;
+      color: var(--ink-dim);
+      padding: 11px 18px;
+      border-right: 1px solid var(--line);
+      background: var(--surface);
+      transition: color .2s ease, background .2s ease;
+      flex: 1 0 auto;
       text-align: center;
-      margin-top: 56px;
-      padding-top: 32px;
-      border-top: 1px solid #2d3348;
-      color: #64748b;
-      font-size: 0.82rem;
     }
-    footer a { color: #60a5fa; text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
-    @media (max-width: 600px) {
-      .container { padding: 48px 20px; }
-      .logo { font-size: 2.1rem; }
+    .chip:last-child { border-right: none; }
+    .chip:hover { color: var(--accent); background: #131315; }
+
+    /* ── Equipo ────────────────────────────────────── */
+    .team {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0 32px;
+      margin-top: clamp(36px, 5vh, 48px);
+    }
+    .member {
+      border-top: 1px solid var(--line);
+      padding-top: 22px;
+      transition: border-color .25s ease;
+    }
+    .member:hover { border-top-color: var(--accent-dim); }
+    .member-name {
+      font-size: 1.05rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+    .member-role {
+      margin-top: 8px;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      line-height: 1.7;
+      color: var(--ink-dim);
+      text-transform: uppercase;
+    }
+
+    /* ── Footer ────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--line);
+      padding: clamp(40px, 6vh, 56px) 0 clamp(48px, 7vh, 64px);
+    }
+    .footer-grid {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .footer-grid p {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--ink-faint);
+      text-transform: uppercase;
+    }
+    .footer-grid a {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: lowercase;
+    }
+
+    /* ── Animación de entrada ──────────────────────── */
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal {
+        opacity: 0;
+        transform: translateY(14px);
+        animation: rise .9s cubic-bezier(.22,.61,.36,1) forwards;
+      }
+      .reveal.d1 { animation-delay: .08s; }
+      .reveal.d2 { animation-delay: .18s; }
+      .reveal.d3 { animation-delay: .3s; }
+      @keyframes rise {
+        to { opacity: 1; transform: none; }
+      }
+    }
+
+    /* ── Responsive ────────────────────────────────── */
+    @media (max-width: 760px) {
+      .capabilities { grid-template-columns: 1fr; border-top: none; }
+      .cap {
+        border-right: none;
+        border-top: 1px solid var(--line);
+        padding: 22px 0;
+      }
+      .cap + .cap { padding-left: 0; }
+      .team { grid-template-columns: 1fr; gap: 28px 0; }
+      .chip { flex: 1 1 50%; border-bottom: 1px solid var(--line); }
+      .stack { border-bottom: none; }
+      .footer-grid { flex-direction: column; gap: 10px; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div class="logo">Build<span>Trust</span></div>
-      <p class="tagline">Inteligencia en licitaciones para el sector de la construcción.</p>
-      <div class="badge">En desarrollo · Proyecto Final de Carrera 2026</div>
-    </header>
 
-    <section>
-      <h2>Qué es BuildTrust</h2>
-      <p>
-        BuildTrust es una plataforma SaaS multi-tenant para la gestión integral
-        de licitaciones en proyectos de construcción de alta gama. Centraliza
-        la documentación técnica, el proceso de cotización con constructoras,
-        y el análisis comparativo de ofertas asistido por inteligencia artificial.
-      </p>
-      <p>
-        El sistema reemplaza el flujo manual basado en correo electrónico y
-        comparación de planillas impresas por un proceso trazable, auditable y
-        escalable. Su componente diferenciador es un pipeline de IA que
-        normaliza documentos heterogéneos —presupuestos en Excel y PDF de
-        distintas constructoras— y genera una comparación estructurada para
-        la toma de decisión.
-      </p>
-      <div class="stack">
-        <span class="chip">React + TypeScript</span>
-        <span class="chip">Python + FastAPI</span>
-        <span class="chip">PostgreSQL + pgvector</span>
-        <span class="chip">AWS Serverless</span>
-        <span class="chip">Step Functions</span>
+  <!-- ═══ Hero ═══ -->
+  <header class="hero">
+    <div class="wrap hero-inner">
+      <div class="status reveal"><span class="dot" aria-hidden="true"></span>En desarrollo · Proyecto Final de Carrera 2026</div>
+      <h1 class="wordmark reveal d1">Build<strong>Trust</strong><span class="terminal">.</span></h1>
+      <p class="tagline reveal d2">Inteligencia en licitaciones para la construcción de alta gama. <em>Trazabilidad, análisis y decisión</em> en una sola plataforma.</p>
+
+      <!-- regla de escala — divisor firma -->
+      <svg class="scale-rule reveal d3" viewBox="0 0 960 22" preserveAspectRatio="none" aria-hidden="true">
+        <line x1="0" y1="21" x2="960" y2="21" stroke="currentColor" stroke-width="1"/>
+        <g stroke="currentColor" stroke-width="1">
+          <line class="origin" x1="0.5" y1="2" x2="0.5" y2="21"/>
+          <line x1="60" y1="13" x2="60" y2="21"/><line x1="120" y1="13" x2="120" y2="21"/><line x1="180" y1="13" x2="180" y2="21"/>
+          <line class="major" x1="240" y1="6" x2="240" y2="21"/>
+          <line x1="300" y1="13" x2="300" y2="21"/><line x1="360" y1="13" x2="360" y2="21"/><line x1="420" y1="13" x2="420" y2="21"/>
+          <line class="major" x1="480" y1="6" x2="480" y2="21"/>
+          <line x1="540" y1="13" x2="540" y2="21"/><line x1="600" y1="13" x2="600" y2="21"/><line x1="660" y1="13" x2="660" y2="21"/>
+          <line class="major" x1="720" y1="6" x2="720" y2="21"/>
+          <line x1="780" y1="13" x2="780" y2="21"/><line x1="840" y1="13" x2="840" y2="21"/><line x1="900" y1="13" x2="900" y2="21"/>
+          <line class="major" x1="959.5" y1="6" x2="959.5" y2="21"/>
+        </g>
+      </svg>
+    </div>
+  </header>
+
+  <main>
+    <!-- ═══ La Plataforma ═══ -->
+    <section id="plataforma">
+      <div class="wrap">
+        <p class="eyebrow">La Plataforma</p>
+        <p class="lede">BuildTrust es una plataforma SaaS multi-tenant para la gestión integral de licitaciones en proyectos de construcción de alta gama: centraliza la documentación técnica, el proceso de cotización y el <strong>análisis comparativo de ofertas asistido por inteligencia artificial</strong>.</p>
+        <p class="body-copy">El sistema reemplaza el flujo manual basado en correo electrónico y comparación de planillas por un proceso trazable, auditable y escalable, de extremo a extremo: desde el cierre técnico del proyecto hasta la adjudicación formal.</p>
+
+        <div class="capabilities">
+          <div class="cap">
+            <h3>Trazabilidad documental</h3>
+            <p>Versionado, estados de aprobación y registro de firmas sobre cada plano, pliego y contrato. Historial permanente y auditable.</p>
+          </div>
+          <div class="cap">
+            <h3>Pipeline de IA</h3>
+            <p>Normaliza presupuestos heterogéneos —Excel y PDF de distintas constructoras— con validación humana obligatoria antes de registrar datos.</p>
+          </div>
+          <div class="cap">
+            <h3>Comparación estructurada</h3>
+            <p>Matriz ítem por ítem, detección de omisiones y anomalías de precio, y benchmarking contra el histórico de cotizaciones.</p>
+          </div>
+        </div>
+
+        <div class="stack" aria-label="Tecnologías">
+          <span class="chip">React + TypeScript</span>
+          <span class="chip">Python + FastAPI</span>
+          <span class="chip">PostgreSQL + pgvector</span>
+          <span class="chip">AWS Serverless</span>
+          <span class="chip">Step Functions</span>
+        </div>
       </div>
     </section>
 
-    <section>
-      <h2>Equipo</h2>
-      <p>
-        BuildTrust es desarrollado por tres estudiantes de Ingeniería de la
-        Universidad de Montevideo como Proyecto Final de Carrera.
-      </p>
-      <div class="team">
-        <div class="member">
-          <div class="member-name">Guillermo Storace</div>
-          <div class="member-role">Backend · Infraestructura</div>
-        </div>
-        <div class="member">
-          <div class="member-name">Felipe Ham</div>
-          <div class="member-role">Backend · Pipeline IA</div>
-        </div>
-        <div class="member">
-          <div class="member-name">Nicolás Tognola</div>
-          <div class="member-role">Frontend · UX</div>
+    <!-- ═══ Equipo ═══ -->
+    <section id="equipo">
+      <div class="wrap">
+        <p class="eyebrow">Equipo</p>
+        <p class="lede">Desarrollado por tres estudiantes de Ingeniería de la Universidad de Montevideo como Proyecto Final de Carrera.</p>
+
+        <div class="team">
+          <div class="member">
+            <div class="member-name">Guillermo Storace</div>
+            <div class="member-role">Arquitectura de Sistemas<br>&amp; Cloud Infrastructure</div>
+          </div>
+          <div class="member">
+            <div class="member-name">Felipe Ham</div>
+            <div class="member-role">Estrategia de Producto</div>
+          </div>
+          <div class="member">
+            <div class="member-name">Nicolás Tognola</div>
+            <div class="member-role">Estrategia de Producto<br>&amp; Interfaces de Usuario</div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section>
-      <h2>Estado del proyecto</h2>
-      <p>
-        BuildTrust se encuentra actualmente en fase de desarrollo activo. La
-        primera versión cubre el flujo completo de licitación —desde el cierre
-        técnico hasta la adjudicación— para nuestro cliente piloto, UruguayFarms,
-        una empresa que gestiona proyectos de construcción residencial de alta
-        gama para inversores privados internacionales.
-      </p>
-      <p>
-        La arquitectura está diseñada como SaaS multi-tenant desde su origen,
-        contemplando la incorporación futura de otras empresas del rubro sin
-        rediseño estructural.
-      </p>
+    <!-- ═══ Estado ═══ -->
+    <section id="estado">
+      <div class="wrap">
+        <p class="eyebrow">Estado del Proyecto</p>
+        <p class="lede">En desarrollo activo. La primera versión cubre el flujo completo de licitación, desde el cierre técnico hasta la adjudicación.</p>
+        <p class="body-copy">El sistema se diseña y valida en colaboración con empresas e inversores líderes del sector residencial premium, utilizando conjuntos de datos históricos reales para calibrar el pipeline de análisis.</p>
+        <p class="body-copy">La arquitectura está concebida como SaaS multi-tenant desde su origen, contemplando la incorporación de nuevas empresas del rubro sin rediseño estructural.</p>
+      </div>
     </section>
+  </main>
 
-    <footer>
+  <!-- ═══ Footer ═══ -->
+  <footer>
+    <div class="wrap footer-grid">
       <p>Universidad de Montevideo · Facultad de Ingeniería · 2026</p>
-      <p style="margin-top: 6px;">Contacto: <a href="mailto:buildtrust.admin@gmail.com">buildtrust.admin@gmail.com</a></p>
-    </footer>
-  </div>
+      <a href="mailto:buildtrust.admin@gmail.com">buildtrust.admin@gmail.com</a>
+    </div>
+  </footer>
+
 </body>
 </html>
