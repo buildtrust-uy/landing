@@ -235,6 +235,28 @@ section + section { border-top: 1px solid var(--line-soft); }
   letter-spacing: -0.01em;
   color: var(--ink);
 }
+
+.flex-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.icon-link {
+  width: 14px;
+  height: 14px;
+  min-width: 14px; /* Evita que flexbox escale el icono */
+  flex-shrink: 0;  /* Previene deformaciones */
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+}
+
+.flex-link:hover .icon-link {
+  opacity: 1;
+}
+
 .member-role {
   margin-top: 8px;
   font-family: var(--mono);
