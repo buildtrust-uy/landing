@@ -322,3 +322,148 @@ footer {
   .stack { border-bottom: none; }
   .footer-grid { flex-direction: column; gap: 10px; }
 }
+
+/* ── Navegación ────────────────────────────────── */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--line);
+  background: rgba(11,11,12,.78);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+.nav-brand {
+  font-family: var(--sans);
+  font-size: 1.02rem;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.nav-brand strong { font-weight: 600; }
+.nav-brand .terminal { color: var(--accent); }
+.nav-brand:hover { color: var(--ink); }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 4vw, 36px);
+}
+.nav-link {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+.nav-link:hover { color: var(--accent); }
+.nav-link.is-active { color: var(--ink); }
+
+/* ── CTA (hairline) ────────────────────────────── */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: clamp(32px, 5vh, 44px);
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 12px 20px;
+  transition: color .2s ease, border-color .2s ease;
+}
+.cta:hover { color: var(--accent); border-color: var(--accent-dim); }
+.cta-arrow { transition: transform .2s ease; }
+.cta:hover .cta-arrow { transform: translateX(4px); }
+
+/* ── Demo · Hero ───────────────────────────────── */
+.demo-hero { padding: clamp(56px, 11vh, 96px) 0 clamp(36px, 6vh, 56px); }
+.demo-title {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  color: var(--ink);
+}
+.demo-title em { font-style: normal; font-weight: 600; }
+.demo-lede {
+  margin-top: 24px;
+  max-width: 600px;
+  font-size: clamp(1.02rem, 2vw, 1.18rem);
+  font-weight: 300;
+  color: var(--ink-dim);
+  line-height: 1.6;
+}
+
+/* ── Demo · Video ──────────────────────────────── */
+#video { padding-top: 0; }
+.video-frame {
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--surface);
+  overflow: hidden;
+  line-height: 0;
+}
+.video-frame video {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #000;
+}
+
+/* ── Demo · Pasos ──────────────────────────────── */
+.steps {
+  list-style: none;
+  margin-top: clamp(40px, 6vh, 56px);
+  border-top: 1px solid var(--line);
+}
+.step {
+  display: flex;
+  gap: clamp(20px, 4vw, 40px);
+  padding: 28px 0;
+  border-bottom: 1px solid var(--line-soft);
+  transition: border-color .25s ease;
+}
+.step:hover { border-bottom-color: var(--accent-dim); }
+.step-num {
+  flex: 0 0 auto;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--accent-dim);
+  padding-top: 4px;
+}
+.step-body { max-width: 640px; }
+.step-body h3 {
+  font-size: 0.98rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  margin-bottom: 8px;
+  color: var(--ink);
+}
+.step-body p {
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: var(--ink-dim);
+  line-height: 1.6;
+}
+
+/* ── Responsive · nuevos componentes ───────────── */
+@media (max-width: 760px) {
+  .nav-inner { gap: 16px; }
+  .nav-links { gap: 20px; }
+  .step { gap: 18px; padding: 22px 0; }
+}
