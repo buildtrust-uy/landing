@@ -1,0 +1,60 @@
+name: Deploy to Amazon S3
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-s3
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      AWS_REGION: us-east-1
+      S3_BUCKET: ${{ vars.S3_BUCKET }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Prepare website files
+        run: |
+          set -euo pipefail
+          test -n "$S3_BUCKET" || { echo "Set the S3_BUCKET repository variable."; exit 1; }
+          mkdir -p public/assets
+          cp ./*.html public/
+          rsync -a --exclude='.*' assets/ public/assets/
+          test -s public/index.html
+          test -s public/demo.html
+
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: us-east-1
+          mask-aws-account-id: true
+
+      - name: Deploy to S3
+        run: |
+          aws s3 sync public/ "s3://$S3_BUCKET/" \
+            --delete \
+            --cache-control 'public, max-age=300' \
+            --no-progress
+
+      - name: Verify website
+        run: |
+          set -euo pipefail
+          website_url="http://${S3_BUCKET}.s3-website-${AWS_REGION}.amazonaws.com"
+          for path in / /demo.html /assets/css/styles.css /assets/icons/favicon.svg /assets/icons/link.svg /assets/video/demo.mp4; do
+            curl --fail --silent --show-error --head --retry 5 --retry-all-errors --retry-delay 3 "${website_url}${path}" > /dev/null
+          done
+          echo "### Website deployed" >> "$GITHUB_STEP_SUMMARY"
+          echo "$website_url" >> "$GITHUB_STEP_SUMMARY"
